@@ -1,0 +1,5 @@
+<courseManager>
+    <saveSlot>
+        <slot fileName="courseStorage0001.xml" isUsed="true" id="30" parent="0" name="someName"/>
+    </saveSlot>
+</courseManager>

@@ -56,8 +56,11 @@ public class CourseManager {
 
     public static CourseManager fromElement(final Element element) throws DataConversionException {
         final Map<Integer, Element> folders = new HashMap<>();
-        for (final Element folder : element.getChild("folders").getChildren()) {
-            folders.put(folder.getAttribute("id").getIntValue(), folder);
+        final Element foldersElement = element.getChild("folders");
+        if (foldersElement != null) {
+            for (final Element folder : foldersElement.getChildren()) {
+                folders.put(folder.getAttribute("id").getIntValue(), folder);
+            }
         }
         final List<Save> saves = new ArrayList<>();
         for (final Element saveSlot : element.getChild("saveSlot").getChildren()) {
