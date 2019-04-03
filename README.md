@@ -8,6 +8,8 @@ von Courseplay generierten XML Dateien in das Openstreetmap-Format, welches dann
 
 Verwendung
 ----------
+[Videotutorial von Gadarol auf YouTube](https://youtu.be/Cz7IJIzb3a8)
+
 1. JAR-Datei herunterladen, speichern und ausführen.
 2. `Course -> OSM` wählen und aus dem Courseplay-Ordner der gewünschten Map die `courseManager.xml` auswählen
 3. Die Kartengröße in Meter Kantenlänge angeben (2048 für Normale- oder 4096 für Vierfachmaps). Der Wert wird später verwendet um
