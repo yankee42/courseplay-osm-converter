@@ -1,6 +1,6 @@
 Courseplay to OpenStreetMap
 ===========================
-Um die gespeicherten gespeicherten Kurse aus Courseplay einfach bearbeiten zu können, konvertiert dieses Programm die
+Um die gespeicherten Kurse aus Courseplay einfach bearbeiten zu können, konvertiert dieses Programm die
 von Courseplay generierten XML Dateien in das Openstreetmap-Format, welches dann mit
 [JOSM](https://josm.openstreetmap.de/) editiert werden kann:
 
@@ -8,9 +8,9 @@ von Courseplay generierten XML Dateien in das Openstreetmap-Format, welches dann
 
 Verwendung
 ----------
-1. JAR-Datei herunterladen und speichern und ausführen.
-2. `Course -> OSM` wählen und aus dem Courseplay-Ordner die `courseManager.xml` auswählen
-3. Die Kartengröße in Meter Kantenlänge angeben (normalerweise 2048 oder 4096). Der Wert wird später verwendet um
+1. JAR-Datei herunterladen, speichern und ausführen.
+2. `Course -> OSM` wählen und aus dem Courseplay-Ordner der gewünschten Map die `courseManager.xml` auswählen
+3. Die Kartengröße in Meter Kantenlänge angeben (2048 für Normale- oder 4096 für Vierfachmaps). Der Wert wird später verwendet um
 dabei zu helfen ein Hintergrundbild auszurichten.
 4. Eine Datei wählen, in die geschrieben werden soll. Erzeugt wird eine einzelne OSM-Datei, die alle gespeicherten Kurse
 enthält.
@@ -18,7 +18,7 @@ enthält.
 6. Die in Schritt 4 generierte Datei öffnen. Zu sehen ist zum Beispiel:
     
     ![Screenshot nach dem Laden](doc/anzeige-geladen.png)
-7. Optional: Eine Hintergrundbild hinterlegen
+7. Optional: Eine Hintergrundbild (map pda) hinterlegen, dazu:
     1. Unter Bearbeiten -> Einstellungen -> Plugins das Plugin "PicLayer" installieren
     2. Eine Zoomstufe einstellen, so dass die komplette Karte zu sehen ist (Zoomen mit Scrollrad, verschieben mit
     gedrückter rechter Maustaste). Dabei hilft das äußere Quadrat, welches die Kartengröße anzeigt   
@@ -26,11 +26,11 @@ enthält.
     4. Bei "Ebenen" oben rechts die Bildebene setzen (den weißen Haken im grünen Kreis auf die Bildebene setzen)
     5. Mit den Werkzeugen in der Leiste links die Karte passend verschieben. Dabei hilft wieder das äußere Quadrat.
     Siehe dazu auch [die Anleitung von PicLayer](https://wiki.openstreetmap.org/wiki/JOSM/Plugins/PicLayer).
-8. Die Kurse nach belieben bearbeiten und speichern.
+8. Die Kurse nach belieben bearbeiten, Punkte verschieben oder löschen und danach speichern.
 9. Im Konverter `OSM -> Course` wählen
 10. Die gespeicherte OSM-Datei angeben
 11. Ein Verzeichnis angeben, in dem die neuen Courseplay-Dateien gespeichert werden sollen. Achtung: Bestehende Dateien
-    werden ohne Nachfrage überschrieben. Verwende ein leeres Verzeichnis oder erstelle vorher ein Backup.       
+    werden ohne Nachfrage überschrieben! Verwende ein leeres Verzeichnis oder erstelle vorher ein Backup.       
 
 Spenden
 -------
