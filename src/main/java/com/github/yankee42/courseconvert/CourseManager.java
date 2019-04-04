@@ -64,12 +64,15 @@ public class CourseManager {
         }
         final List<Save> saves = new ArrayList<>();
         for (final Element saveSlot : element.getChild("saveSlot").getChildren()) {
-            saves.add(new Save(
-                saveSlot.getAttribute("id").getIntValue(),
-                saveSlot.getAttribute("isUsed").getBooleanValue(),
-                buildPath(saveSlot, folders),
-                saveSlot.getAttributeValue("fileName")
-            ));
+            final boolean isUsed = saveSlot.getAttribute("isUsed").getBooleanValue();
+            if (isUsed) {
+                saves.add(new Save(
+                    saveSlot.getAttribute("id").getIntValue(),
+                    isUsed,
+                    buildPath(saveSlot, folders),
+                    saveSlot.getAttributeValue("fileName")
+                ));
+            }
         }
         return new CourseManager(saves);
     }

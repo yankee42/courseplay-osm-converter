@@ -9,7 +9,7 @@ import static org.testng.Assert.assertTrue;
 
 public class CourseManagerTest {
     @Test
-    public void testName() throws Exception {
+    public void fromElement_loadsSimpleCourseManager() throws Exception {
         // setup
         final Document document = new SAXBuilder().build(
             CourseManagerTest.class.getResourceAsStream("CourseManagerTest_simpleCourseManager.xml")
@@ -24,5 +24,19 @@ public class CourseManagerTest {
         assertEquals(actual.getSaves().get(0).getPath(), "someName");
         assertEquals(actual.getSaves().get(0).getId(), 30);
         assertTrue(actual.getSaves().get(0).isUsed());
+    }
+
+    @Test
+    public void fromElement_ignoresUnused() throws Exception {
+        // setup
+        final Document document = new SAXBuilder().build(
+            CourseManagerTest.class.getResourceAsStream("CourseManagerTest_courseManager_unused.xml")
+        );
+
+        // execution
+        final CourseManager actual = CourseManager.fromElement(document.getRootElement());
+
+        // evaluation
+        assertEquals(actual.getSaves().size(), 0);
     }
 }
