@@ -32,6 +32,11 @@ public class CourseWaypoint {
         for (final Attribute attribute : element.getAttributes()) {
             if (attribute.getName().equals("pos")) {
                 final String[] values = attribute.getValue().split(" ");
+                if (values.length != 3) {
+                    throw new RuntimeException(
+                        "Cannot parse position <" + attribute.getValue() + "> in element <" + element.getName() + ">"
+                    );
+                }
                 x = Double.parseDouble(values[0]);
                 y = Double.parseDouble(values[2]);
                 height = Double.parseDouble(values[1]);
@@ -77,9 +82,6 @@ public class CourseWaypoint {
     public Element toJdom(final long number) {
         final Element element = new Element("waypoint" + number);
         element.setAttribute("pos", String.format(Locale.US, "%1$.2f %2$.2f %3$.2f", x, height, y));
-        /*element.setAttribute(
-            "pos", POS_FORMAT.format(x) + ' ' + POS_FORMAT.format(height) + ' ' + POS_FORMAT.format(y)
-        );*/
         properties.forEach(element::setAttribute);
         return element;
     }

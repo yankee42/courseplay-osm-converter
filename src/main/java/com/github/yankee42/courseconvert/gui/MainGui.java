@@ -12,6 +12,8 @@ import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.Component;
+import java.awt.Toolkit;
+import java.awt.datatransfer.StringSelection;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.IOException;
@@ -93,7 +95,11 @@ public class MainGui {
     private void exceptionMessage(final Exception e) {
         final StringWriter buffer = new StringWriter();
         e.printStackTrace(new PrintWriter(buffer));
-        JOptionPane.showMessageDialog(frame, buffer.toString());
+        final String strackTrace = buffer.toString();
+        Toolkit.getDefaultToolkit().getSystemClipboard().setContents(new StringSelection(strackTrace), null);
+        JOptionPane.showMessageDialog(
+            frame, "An error occured (also copied to clipboard):\n\n" + strackTrace
+        );
     }
 
     private void tryCourseToOsm() throws JDOMException, IOException {
@@ -118,7 +124,7 @@ public class MainGui {
                     outputFile = new File(outputFile.getParentFile(), outputFile.getName() + ".osm");
                 }
                 CourseOsmConverter.convertManager(inputFile.toPath(), outputFile.toPath(), mapSize);
-                JOptionPane.showMessageDialog(frame, "Done");
+                JOptionPane.showMessageDialog(frame, "File created: " + outputFile);
             }
         }
     }

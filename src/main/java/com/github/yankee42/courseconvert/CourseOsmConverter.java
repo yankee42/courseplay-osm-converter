@@ -107,14 +107,18 @@ public class CourseOsmConverter {
     }
 
     private static Course parseCourse(final Path in) throws JDOMException, IOException {
-        final Element root = XmlUtil.load(in).getRootElement();
+        try {
+            final Element root = XmlUtil.load(in).getRootElement();
 
-        return new Course(
-            root.getChildren().stream()
-                .map(CourseWaypoint::fromElement)
-                .collect(Collectors.toList()),
-            root.getAttributes().stream().collect(Collectors.toMap(Attribute::getName, Attribute::getValue))
-        );
+            return new Course(
+                root.getChildren().stream()
+                    .map(CourseWaypoint::fromElement)
+                    .collect(Collectors.toList()),
+                root.getAttributes().stream().collect(Collectors.toMap(Attribute::getName, Attribute::getValue))
+            );
+        } catch (Exception e) {
+            throw new ParseCourseException(in, e);
+        }
     }
 
     private static double meterToDegree(final double meter) {
