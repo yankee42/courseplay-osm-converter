@@ -90,15 +90,18 @@ public class CourseOsmConverter {
                 toMap(entry -> COURSE_PREFIX + entry.getKey(), Map.Entry::getValue)
             )
         );
-        node.getTags().put("height", String.valueOf(waypoint.getHeight()));
+        if (waypoint.getHeight() != null) {
+            node.getTags().put("height", String.valueOf(waypoint.getHeight()));
+        }
         return node;
     }
 
     public static CourseWaypoint toCourseWaypoint(final Node node) {
+        final String height = node.getTags().get("height");
         return new CourseWaypoint(
             degreeToMeter(node.getLon()),
             degreeToMeter(node.getLat() * -1),
-            Double.parseDouble(node.getTags().get("height")),
+            height == null ? null : Double.parseDouble(height),
             node.getTags().entrySet()
                 .stream()
                 .filter(entry -> entry.getKey().startsWith(COURSE_PREFIX))

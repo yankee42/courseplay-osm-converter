@@ -16,10 +16,10 @@ public class CourseWaypoint {
     }
     private double x;
     private double y;
-    private double height;
-    private Map<String, String> properties = new HashMap<>();
+    private Double height;
+    private Map<String, String> properties;
 
-    public CourseWaypoint(final double x, final double y, final double height, final Map<String, String> properties) {
+    public CourseWaypoint(final double x, final double y, final Double height, final Map<String, String> properties) {
         this.x = x;
         this.y = y;
         this.height = height;
@@ -27,19 +27,22 @@ public class CourseWaypoint {
     }
 
     public static CourseWaypoint fromElement(final Element element) {
-        double x = 0, y = 0, height = 0;
+        double x = 0, y = 0;
+        Double height = null;
         final Map<String, String> properties = new HashMap<>();
         for (final Attribute attribute : element.getAttributes()) {
             if (attribute.getName().equals("pos")) {
                 final String[] values = attribute.getValue().split(" ");
-                if (values.length != 3) {
+                if (values.length != 2 && values.length != 3) {
                     throw new RuntimeException(
                         "Cannot parse position <" + attribute.getValue() + "> in element <" + element.getName() + ">"
                     );
                 }
                 x = Double.parseDouble(values[0]);
-                y = Double.parseDouble(values[2]);
-                height = Double.parseDouble(values[1]);
+                y = Double.parseDouble(values[values.length - 1]);
+                if (values.length == 3) {
+                    height = Double.parseDouble(values[1]);
+                }
             } else {
                 properties.put(attribute.getName(), attribute.getValue());
             }
@@ -63,11 +66,11 @@ public class CourseWaypoint {
         this.y = y;
     }
 
-    public double getHeight() {
+    public Double getHeight() {
         return height;
     }
 
-    public void setHeight(final double height) {
+    public void setHeight(final Double height) {
         this.height = height;
     }
 
@@ -81,7 +84,11 @@ public class CourseWaypoint {
 
     public Element toJdom(final long number) {
         final Element element = new Element("waypoint" + number);
-        element.setAttribute("pos", String.format(Locale.US, "%1$.2f %2$.2f %3$.2f", x, height, y));
+        if (height == null) {
+            element.setAttribute("pos", String.format(Locale.US, "%1$.2f %2$.2f", x, y));
+        } else {
+            element.setAttribute("pos", String.format(Locale.US, "%1$.2f %2$.2f %3$.2f", x, height, y));
+        }
         properties.forEach(element::setAttribute);
         return element;
     }
