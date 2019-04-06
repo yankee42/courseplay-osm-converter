@@ -24,7 +24,11 @@ enthält.
     1. Unter Bearbeiten -> Einstellungen -> Plugins das Plugin "PicLayer" installieren
     2. Eine Zoomstufe einstellen, so dass die komplette Karte zu sehen ist (Zoomen mit Scrollrad, verschieben mit
     gedrückter rechter Maustaste). Dabei hilft das äußere Quadrat, welches die Kartengröße anzeigt   
-    3. Im Menü über Hintergrundbilder -> Neue Bildebene aus Datei ein Bild von der Map laden
+    3. Im Menü über Hintergrundbilder -> Neue Bildebene aus Datei ein Bild von der Map laden  
+       Ein Hintergrundbild der Map findest du wie folgt:  
+         a) Originalmaps: Im Installationsverzeichnis, z.B.: Steam\steamapps\common\Farming Simulator 19\sdk\maps\mapD\maps\pda_map_H.dds  
+         b) Bei Modmaps: In der .ZIP Datei der Mod unter \maps\pda_map_H.dds  
+       Diese .dds Datei einfach mit einem Grafikprogramm, z.B. Irfanview in .png umwandeln  
     4. Bei "Ebenen" oben rechts die Bildebene setzen (den weißen Haken im grünen Kreis auf die Bildebene setzen)
     5. Mit den Werkzeugen in der Leiste links die Karte passend verschieben. Dabei hilft wieder das äußere Quadrat.
     Siehe dazu auch [die Anleitung von PicLayer](https://wiki.openstreetmap.org/wiki/JOSM/Plugins/PicLayer).
