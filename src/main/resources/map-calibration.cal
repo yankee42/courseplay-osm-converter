@@ -1,0 +1,10 @@
+# This calibration file expects 1 pixel = 1 meter and the image center is placed at position 0,0
+POSITION_Y=0
+POSITION_X=0
+M12=0
+M11=1
+M10=0.0
+M02=0
+INITIAL_SCALE=100
+M01=0.0
+M00=1

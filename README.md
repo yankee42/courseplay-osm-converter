@@ -23,18 +23,18 @@ enthält.
     
     ![Screenshot nach dem Laden](doc/anzeige-geladen.png)
 7. Optional: Eine Hintergrundbild (map pda) hinterlegen, dazu:
-    1. Unter Bearbeiten -> Einstellungen -> Plugins das Plugin "PicLayer" installieren
-    2. Eine Zoomstufe einstellen, so dass die komplette Karte zu sehen ist (Zoomen mit Scrollrad, verschieben mit
-    gedrückter rechter Maustaste). Dabei hilft das äußere Quadrat, welches die Kartengröße anzeigt   
-    3. Im Menü über Hintergrundbilder -> Neue Bildebene aus Datei ein Bild von der Map laden  
-    Ein Hintergrundbild der Map findest du wie folgt:  
-        - **Originalmaps**: Im Installationsverzeichnis, z.B.: Steam\steamapps\common\Farming Simulator 19\sdk\maps\mapD\maps\pda_map_H.dds  
-        - Bei **Modmaps**: In der .ZIP Datei der Mod unter \maps\pda_map_H.dds
-         
-         Diese .dds Datei einfach mit einem Grafikprogramm, z.B. Irfanview in .png umwandeln  
-    4. Bei "Ebenen" oben rechts die Bildebene setzen (den weißen Haken im grünen Kreis auf die Bildebene setzen)
-    5. Mit den Werkzeugen in der Leiste links die Karte passend verschieben. Dabei hilft wieder das äußere Quadrat.
-    Siehe dazu auch [die Anleitung von PicLayer](https://wiki.openstreetmap.org/wiki/JOSM/Plugins/PicLayer).
+    1. Im OSM-Converter "Extract Background map" wählen
+    2. Die `.dds`-Datei oder die `.zip` der Mod auswählen. Bei Originalmaps findest du diese im
+    Installationsverzeichnis (z.B.: `Steam\steamapps\common\Farming Simulator 19\sdk\maps\mapD\maps\pda_map_H.dds`)  
+    3. Eine Ausgabedatei angeben. Es wird die angegebene Datei (zum Beispiel `map.png`) erzeugt und dazu eine
+       Kalibrierungsdatei (in dem Beispiel `map.png.cal`)
+    4. In JOSM unter Bearbeiten -> Einstellungen -> Plugins das Plugin "PicLayer" installieren
+    5. Im Menü über Hintergrundbilder -> Neue Bildebene aus Datei da in Schritt 3 erzeugte Bild laden. Die Kalibrierung
+    wird automatisch mitgeladen.  
+    6. Die Karte sollte automatisch korrekt kalibriert sein. Wenn du die Karte trotzdem anpassen möchtest:
+        1. Bei "Ebenen" oben rechts die Bildebene setzen (den weißen Haken im grünen Kreis auf die Bildebene setzen)
+        2. Mit den Werkzeugen in der Leiste links die Karte passend verschieben. Dabei hilft wieder das äußere Quadrat.
+        Siehe dazu auch [die Anleitung von PicLayer](https://wiki.openstreetmap.org/wiki/JOSM/Plugins/PicLayer).
 8. Die Kurse nach belieben bearbeiten, Punkte verschieben oder löschen und danach speichern.
 9. Im Konverter `OSM -> Course` wählen
 10. Die gespeicherte OSM-Datei angeben
@@ -64,18 +64,18 @@ Usage
     ![Screenshot nach dem Laden](doc/anzeige-geladen.png)
     The outer square represents the map size that you entered in step 3.
 7. Optional: Add a background image (map pda):
-    1. Go to Edit -> Preferences -> Plugins and install the plugin "PicLayer".
-    2. Choose a zoom level, so that you can see the whole map (zoom using scroll wheel, move the map by holding right
-    mouse button and moving the mouse.   
-    3. In the menu Imagery -> Add picture layer from file add an image from the map.
-    You can find an image as follows:
-        - **Original maps**: In the install directory e.g., z.B.: Steam\steamapps\common\Farming Simulator 19\sdk\maps\mapD\maps\pda_map_H.dds  
-        - **Mod maps**: In the .zip file of the mod with the path \maps\pda_map_H.dds
-          
-        Convert this .dds to .png using some image editor e.g. using Irfanview
-    4. In the layers panel at the top right, move the white check mark in the green circle on the image layer.
-    5. Use the toolbar on the left to adjust the map. See also the
-    [manual of PicLayer](https://wiki.openstreetmap.org/wiki/JOSM/Plugins/PicLayer).
+    1. In the OSM-Converter choose "Extract Background map"
+    2. Choose the `.dds`-File or the `.zip` of the mod. In case of original maps, you can find them in the installation
+    directory (e.g.: `Steam\steamapps\common\Farming Simulator 19\sdk\maps\mapD\maps\pda_map_H.dds`)  
+    3. Select an output filename. The file while be created (e.g. `map.png`) together with a calibration file (in this
+    example `map.png.cal`).
+    4. In JOSM go to Edit -> Preferences -> Plugins and install the plugin "PicLayer".
+    5. In the menu select Imagery -> Add picture layer from file and select the image created in step 3. The calibration
+    file is loaded automatically.
+    6. The map should be calibrated correctly. If you still like to adjust it, you can do so as follows:
+        1. In the layers panel at the top right, move the white check mark in the green circle on the image layer.
+        2. Use the toolbar on the left to adjust the map. See also the
+        [manual of PicLayer](https://wiki.openstreetmap.org/wiki/JOSM/Plugins/PicLayer).
 8. Edit the courses as desired, then save.
 9. In the converter choose `OSM -> Course`
 10. Choose the saved OSM-file

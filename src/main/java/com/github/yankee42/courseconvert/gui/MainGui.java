@@ -1,5 +1,6 @@
 package com.github.yankee42.courseconvert.gui;
 
+import com.github.yankee42.courseconvert.BackgroundImageExtractor;
 import com.github.yankee42.courseconvert.CourseOsmConverter;
 import org.jdom2.JDOMException;
 
@@ -19,6 +20,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.nio.file.Path;
 
 public class MainGui {
     private JFrame frame;
@@ -36,7 +38,8 @@ public class MainGui {
         frame.setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.Y_AXIS));
         frame.add(createOsmToCourseButton());
         frame.add(createCourseToOsmButton());
-        frame.setSize(300, 100);
+        frame.add(createBackgroundImageExtractorButton());
+        frame.setSize(300, 200);
         frame.setVisible(true);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         
@@ -51,6 +54,12 @@ public class MainGui {
     private Component createCourseToOsmButton() {
         final JButton result = new JButton("OSM -> Course");
         result.addActionListener(this::osmToCourse);
+        return result;
+    }
+
+    private JButton createBackgroundImageExtractorButton() {
+        final JButton result = new JButton("Extract Background map");
+        result.addActionListener(this::extractBackgroundImage);
         return result;
     }
 
@@ -125,6 +134,35 @@ public class MainGui {
                 }
                 CourseOsmConverter.convertManager(inputFile.toPath(), outputFile.toPath(), mapSize);
                 JOptionPane.showMessageDialog(frame, "File created: " + outputFile);
+            }
+        }
+    }
+
+    private void extractBackgroundImage(final ActionEvent actionEvent) {
+        try {
+            tryExtractBackgroundImage();
+        } catch (Exception e) {
+            exceptionMessage(e);
+        }
+    }
+
+    private void tryExtractBackgroundImage() throws IOException {
+        final JFileChooser inputFileChooser = new JFileChooser();
+        inputFileChooser.setDialogTitle("Open mod zip file or .dds file");
+        inputFileChooser.setFileFilter(new FileNameExtensionFilter("Mod zip or dds", "zip", "dds"));
+        if (inputFileChooser.showOpenDialog(frame) == JFileChooser.APPROVE_OPTION) {
+            final File inputFile = inputFileChooser.getSelectedFile();
+            final JFileChooser outputFileChooser = new JFileChooser();
+            outputFileChooser.setDialogTitle("Select output file");
+            outputFileChooser.setFileFilter(new FileNameExtensionFilter("png", "png"));
+            if (outputFileChooser.showOpenDialog(frame) == JFileChooser.APPROVE_OPTION) {
+                Path outputImage = outputFileChooser.getSelectedFile().toPath();
+                if (!outputImage.getFileName().toString().contains(".")) {
+                    outputImage = outputImage.resolveSibling(outputImage.getFileName().toString() + ".png");
+                }
+                final Path outputCal = outputImage.resolveSibling(outputImage.getFileName() + ".cal");
+                BackgroundImageExtractor.extract(inputFile.toPath(), outputImage, outputCal);
+                JOptionPane.showMessageDialog(frame, "Files created:\n" + outputImage + "\n" + outputCal);
             }
         }
     }
