@@ -1,0 +1,7 @@
+<configuration>
+    <appender name="FORM" class="com.github.yankee42.courseconvert.log.TextPaneAppender" />
+
+    <root level="debug">
+        <appender-ref ref="FORM" />
+    </root>
+</configuration>

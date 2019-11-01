@@ -1,8 +1,11 @@
 package com.github.yankee42.courseconvert;
 
 import org.jdom2.Attribute;
+import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -15,7 +18,7 @@ import static com.github.yankee42.courseconvert.IdGenerator.nextId;
 import static java.util.stream.Collectors.toMap;
 
 public class CourseOsmConverter {
-
+    private static final Logger logger = LoggerFactory.getLogger(CourseOsmConverter.class);
     private static final String TAG_FILE_NAME = "fileName";
     private static final String TAG_USED = "used";
     private static final String TAG_PATH = "name";
@@ -25,10 +28,14 @@ public class CourseOsmConverter {
     private static final double METER_PER_DEGREE = 1_000_000d / 9d;
 
     public static void convertManager(final Path managerPath, final Path path, final int mapSize) throws JDOMException, IOException {
+        logger.info("Reading {}", managerPath);
         final CourseManager courseManager = CourseManager.fromElement(XmlUtil.load(managerPath).getRootElement());
+        logger.info("Found {} saves. Reading...", courseManager.getSaves().size());
         final OsmMap osm = new OsmMap();
         for (final CourseManager.Save save : courseManager.getSaves()) {
-            final Course course = parseCourse(managerPath.resolveSibling(save.getFileName()));
+            final Path courseFile = managerPath.resolveSibling(save.getFileName());
+            logger.debug("Reading {}", courseFile);
+            final Course course = parseCourse(courseFile);
             final List<Node> courseNodes = course
                 .getWaypoints()
                 .stream()
@@ -42,9 +49,14 @@ public class CourseOsmConverter {
             courseWay.getTags().put(TAG_PATH, save.getPath());
             course.getProperties().forEach((k, v) -> courseWay.getTags().put(COURSE_PREFIX + k, v));
             osm.getWays().add(courseWay);
+            logger.debug("Loaded {} nodes", courseNodes.size());
         }
         addMapCalibrationWay(osm, mapSize / 2);
-        XmlUtil.save(osm.toJdom(), path);
+        logger.info("All courses loaded. Converting to OSM");
+        final Document document = osm.toJdom();
+        logger.info("Conversion to OSM complete. Writing to {}", path);
+        XmlUtil.save(document, path);
+        logger.info("-- DONE --");
     }
 
     public static void convertOsm(final Path osmPath, final Path outputPath) throws JDOMException, IOException {

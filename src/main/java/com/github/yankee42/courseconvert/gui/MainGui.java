@@ -2,13 +2,17 @@ package com.github.yankee42.courseconvert.gui;
 
 import com.github.yankee42.courseconvert.BackgroundImageExtractor;
 import com.github.yankee42.courseconvert.CourseOsmConverter;
+import com.github.yankee42.courseconvert.log.TextPaneAppender;
 import org.jdom2.JDOMException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
 import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -23,6 +27,7 @@ import java.io.StringWriter;
 import java.nio.file.Path;
 
 public class MainGui {
+    private static final Logger log = LoggerFactory.getLogger(MainGui.class);
     private JFrame frame;
 
     private MainGui() {
@@ -39,10 +44,16 @@ public class MainGui {
         frame.add(createOsmToCourseButton());
         frame.add(createCourseToOsmButton());
         frame.add(createBackgroundImageExtractorButton());
-        frame.setSize(300, 200);
+        frame.add(createLogPane());
+        frame.setSize(600, 800);
         frame.setVisible(true);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        
+
+        log.info("Ready");
+    }
+
+    private Component createLogPane() {
+        return new JScrollPane(TextPaneAppender.getTextPane());
     }
 
     private Component createOsmToCourseButton() {
@@ -128,12 +139,15 @@ public class MainGui {
             final int mapSize = Integer.parseInt(JOptionPane.showInputDialog(frame, "Map size", 4096));
 
             if (outputFileChooser.showOpenDialog(frame) == JFileChooser.APPROVE_OPTION) {
-                File outputFile = outputFileChooser.getSelectedFile();
-                if (!outputFile.getName().contains(".")) {
-                    outputFile = new File(outputFile.getParentFile(), outputFile.getName() + ".osm");
+                final File selectedOutputFile = outputFileChooser.getSelectedFile();
+                final File outputFile;
+                if (!selectedOutputFile.getName().contains(".")) {
+                    outputFile = new File(selectedOutputFile.getParentFile(), selectedOutputFile.getName() + ".osm");
+                } else {
+                    outputFile = selectedOutputFile;
                 }
                 CourseOsmConverter.convertManager(inputFile.toPath(), outputFile.toPath(), mapSize);
-                JOptionPane.showMessageDialog(frame, "File created: " + outputFile);
+                JOptionPane.showMessageDialog(frame, "File created: " + selectedOutputFile);
             }
         }
     }
