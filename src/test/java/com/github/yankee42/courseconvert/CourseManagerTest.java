@@ -39,4 +39,18 @@ public class CourseManagerTest {
         // evaluation
         assertEquals(actual.getSaves().size(), 0);
     }
+
+    @Test
+    public void fromElement_ignoresNoAttributes() throws Exception {
+        // setup
+        final Document document = new SAXBuilder().build(
+            CourseManagerTest.class.getResourceAsStream("CourseManagerTest_slotNoAttributes.xml")
+        );
+
+        // execution
+        final CourseManager actual = CourseManager.fromElement(document.getRootElement());
+
+        // evaluation
+        assertEquals(actual.getSaves().size(), 0);
+    }
 }

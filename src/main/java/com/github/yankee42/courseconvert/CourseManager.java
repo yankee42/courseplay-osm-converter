@@ -1,5 +1,6 @@
 package com.github.yankee42.courseconvert;
 
+import org.jdom2.Attribute;
 import org.jdom2.DataConversionException;
 import org.jdom2.Document;
 import org.jdom2.Element;
@@ -64,7 +65,8 @@ public class CourseManager {
         }
         final List<Save> saves = new ArrayList<>();
         for (final Element saveSlot : element.getChild("saveSlot").getChildren()) {
-            final boolean isUsed = saveSlot.getAttribute("isUsed").getBooleanValue();
+            final Attribute isUsedAttribute = saveSlot.getAttribute("isUsed");
+            final boolean isUsed = isUsedAttribute != null && isUsedAttribute.getBooleanValue();
             if (isUsed) {
                 saves.add(new Save(
                     saveSlot.getAttribute("id").getIntValue(),
